@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Skin Disease Detection System</title>
+        <style>
+            :root {
+                --primary-color: #5c5ede;
+                --secondary-color: #4547b8;
+                --light-color: #f8f9fa;
+                --dark-color: #343a40;
+                --success-color: #2ecc71;
+                --warning-color: #f39c12;
+                --error-color: #e74c3c;
+                --light-gray: #f8f9fa;
+                --border-color: #e2e8f0;
+                --text-dark: #2d3748;
+                --text-light: #718096;
+                --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            body {
+                background-color: #f5f5f5;
+                color: var(--dark-color);
+                line-height: 1.6;
+                padding: 20px;
+            }
+
+            .container {
+                max-width: 1600px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            header {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 8px 8px 0 0;
+                text-align: center;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+                font-weight: bold;
+            }
+
+            .main-content {
+                background-color: white;
+                border-radius: 0 0 8px 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                padding: 1.5rem;
+            }
+
+            h1 {
+                color: var(--primary-color);
+                margin-bottom: 1.5rem;
+                text-align: center;
+            }
+            .hiden{
+              display: none;
+            }
+            .project-description {
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+
+            .flex-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 2rem;
+            }
+
+            .left-section {
+                flex: 1;
+                min-width: 300px;
+            }
+
+            .right-section {
+                flex: 2;
+                min-width: 300px;
+            }
+
+            .image-upload-container {
+                margin-bottom: 2rem;
+            }
+
+            .image-upload {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border: 2px dashed var(--primary-color);
+                border-radius: 8px;
+                padding: 3rem 2rem;
+                margin-bottom: 2rem;
+                cursor: pointer;
+            }
+
+            .image-upload:hover {
+                background-color: rgba(92, 94, 222, 0.05);
+            }
+
+            .upload-icon {
+                font-size: 4rem;
+                color: var(--primary-color);
+                margin-bottom: 1.5rem;
+            }
+
+            .upload-text {
+                text-align: center;
+            }
+
+            .preview-container {
+                margin: 1.5rem 0;
+                text-align: center;
+            }
+
+            .preview-image {
+                max-width: 100%;
+                max-height: 300px;
+                border-radius: 8px;
+                border: 1px solid #ddd;
+            }
+
+            .model-selector {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                margin: 1.5rem 0;
+            }
+
+            .model-option {
+                flex: 1;
+                min-width: 120px;
+                padding: 1rem;
+                border: 2px solid var(--light-color);
+                border-radius: 8px;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .model-option:hover,
+            .model-option.active {
+                border-color: var(--primary-color);
+                background-color: rgba(92, 94, 222, 0.1);
+            }
+
+            .model-option h3 {
+                margin-bottom: 0.5rem;
+                font-size: 1rem;
+                color: var(--primary-color);
+            }
+
+            .btn {
+                display: inline-block;
+                padding: 1rem 2rem;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: 500;
+                font-size: 1.1rem;
+                text-align: center;
+                text-decoration: none;
+                width: 100%;
+            }
+
+            .btn-primary {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+            .btn-primary:hover {
+                background-color: var(--secondary-color);
+            }
+
+            .btn-file {
+                background-color: #f8f9fa;
+                color: var(--dark-color);
+                border: 1px solid #ddd;
+                padding: 0.8rem 1.5rem;
+                margin-top: 1rem;
+            }
+
+            .btn-file:hover {
+                background-color: #e9ecef;
+            }
+
+            input[type="file"] {
+                display: none;
+            }
+
+            .results-section {
+                background-color: #f8f9fa;
+                border-radius: 8px;
+                padding: 1.5rem;
+                border: 1px solid #ddd;
+            }
+
+            .result-item {
+                display: flex;
+                margin-bottom: 1rem;
+            }
+
+            .result-label {
+                flex: 2;
+            }
+
+            .result-value {
+                flex: 3;
+            }
+
+            .diagnosis-result {
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+
+            .confidence-bar-container {
+                background-color: #e9ecef;
+                height: 20px;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            .confidence-bar {
+                background-color: var(--primary-color);
+                height: 100%;
+                width: 87%;
+            }
+
+            .confidence-value {
+                text-align: right;
+                margin-top: 0.3rem;
+            }
+
+            .probability-distribution {
+                margin-top: 2rem;
+            }
+
+            .prob-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 0.5rem;
+            }
+
+            .prob-label {
+                width: 120px;
+            }
+
+            .prob-bar-container {
+                flex-grow: 1;
+                background-color: #e9ecef;
+                height: 20px;
+                border-radius: 5px;
+                overflow: hidden;
+                margin: 0 10px;
+            }
+
+            .prob-bar {
+                background-color: var(--primary-color);
+                height: 100%;
+            }
+
+            .prob-bar-1 {
+                width: 87%;
+            }
+
+            .prob-bar-2 {
+                width: 8%;
+            }
+
+            .prob-bar-3 {
+                width: 3%;
+            }
+
+            .prob-bar-4 {
+                width: 2%;
+            }
+
+            .model-performance {
+                margin-top: 2rem;
+            }
+
+            .metrics-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .metric-card {
+                flex: 1;
+                min-width: 100px;
+                background-color: white;
+                border-radius: 5px;
+                padding: 1rem;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            .metric-value {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+
+            .section-title {
+                color: var(--primary-color);
+                margin-bottom: 1rem;
+            }
+
+            @media (max-width: 768px) {
+                .flex-container {
+                    flex-direction: column;
+                }
+            }
+          
+              #classification-result {
+                width: 100%;
+                max-width: 1100px;
+                margin: 0 auto;
+              }
+          
+              .diagnosis-container {
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+              }
+          
+              .diagnosis-header {
+                background-color: white;
+                border-radius: 12px;
+                box-shadow: var(--shadow);
+                padding: 25px;
+                text-align: center;
+                margin-bottom: 10px;
+              }
+          
+              .diagnosis-header h2 {
+                color: var(--primary-color);
+                margin-bottom: 10px;
+                font-size: 1.8rem;
+              }
+          
+              .timestamp {
+                color: var(--text-light);
+                font-size: 0.9rem;
+                margin-bottom: 15px;
+              }
+          
+              .image-container {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                flex-wrap: wrap;
+                margin: 20px 0;
+              }
+          
+              .image-card {
+                text-align: center;
+                width: 280px;
+              }
+          
+              .image-card img {
+                width: 100%;
+                height: auto;
+                border-radius: 8px;
+                box-shadow: var(--shadow);
+                margin-bottom: 10px;
+              }
+          
+              .image-card p {
+                color: var(--text-light);
+                font-size: 0.9rem;
+              }
+          
+              .best-model-section {
+                background-color: white;
+                border-radius: 12px;
+                box-shadow: var(--shadow);
+                padding: 25px;
+              }
+          
+              .section-title {
+                color: var(--primary-color);
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+              }
+          
+              .section-title i {
+                color: var(--success-color);
+                font-size: 1.2rem;
+              }
+          
+              .diagnosis-result {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+              }
+          
+              .result-highlight {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                background-color: rgba(46, 204, 113, 0.1);
+                border-radius: 8px;
+                padding: 20px;
+                margin-bottom: 10px;
+              }
+          
+              .diagnosis-icon {
+                font-size: 2.5rem;
+                color: var(--success-color);
+              }
+          
+              .diagnosis-info {
+                flex-grow: 1;
+              }
+          
+              .diagnosis-name {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: var(--text-dark);
+                margin-bottom: 5px;
+              }
+          
+              .model-name {
+                color: var(--primary-color);
+                font-weight: bold;
+              }
+          
+              .confidence-container {
+                margin-top: 10px;
+              }
+          
+              .confidence-label {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 5px;
+              }
+          
+              .confidence-label span {
+                font-size: 0.9rem;
+                color: var(--text-light);
+              }
+          
+              .confidence-value {
+                font-weight: bold;
+                color: var(--text-dark);
+              }
+          
+              .confidence-bar-container {
+                height: 10px;
+                background-color: var(--light-gray);
+                border-radius: 5px;
+                overflow: hidden;
+              }
+          
+              .confidence-bar {
+                height: 100%;
+                border-radius: 5px;
+                transition: width 0.5s ease-out;
+              }
+          
+              .high-confidence {
+                background-color: var(--success-color);
+              }
+          
+              .medium-confidence {
+                background-color: var(--warning-color);
+              }
+          
+              .low-confidence {
+                background-color: var(--error-color);
+              }
+          
+              .metrics-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+                {% comment %} margin-top: 20px; {% endcomment %}
+              }
+          
+              @media (max-width: 768px) {
+                .metrics-grid {
+                  grid-template-columns: repeat(2, 1fr);
+                }
+              }
+          
+              @media (max-width: 500px) {
+                .metrics-grid {
+                  grid-template-columns: 1fr;
+                }
+              }
+          
+              .metric-card {
+                background-color: var(--light-gray);
+                border-radius: 8px;
+                padding: 5px;
+                text-align: center;
+              }
+          
+              .metric-value {
+                font-size: 1.4rem;
+                font-weight: bold;
+                color: var(--primary-color);
+                margin-bottom: 5px;
+              }
+          
+              .metric-name {
+                color: var(--text-light);
+                font-size: 0.9rem;
+              }
+          
+              .all-models-section {
+                background-color: white;
+                border-radius: 12px;
+                box-shadow: var(--shadow);
+                padding: 25px;
+              }
+          
+              .models-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+                overflow-x: auto;
+              }
+          
+              .models-table-container {
+                overflow-x: auto;
+              }
+          
+              .models-table th,
+              .models-table td {
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid var(--border-color);
+              }
+          
+              .models-table th {
+                background-color: var(--light-gray);
+                color: var(--text-dark);
+                font-weight: bold;
+              }
+          
+              .models-table tbody tr:hover {
+                background-color: rgba(52, 152, 219, 0.05);
+              }
+          
+              .models-table .best-row {
+                background-color: rgba(46, 204, 113, 0.1);
+              }
+          
+              .models-table .best-row:hover {
+                background-color: rgba(46, 204, 113, 0.15);
+              }
+          
+              .badge {
+                display: inline-block;
+                padding: 2px 8px;
+                border-radius: 12px;
+                font-size: 0.75rem;
+                font-weight: bold;
+                color: white;
+                background-color: var(--success-color);
+              }
+          
+              .emoji-icon {
+                font-style: normal;
+                font-size: 1.2em;
+                margin-right: 5px;
+              }
+          
+              .footnote {
+                margin-top: 15px;
+                font-size: 0.85rem;
+                color: var(--text-light);
+                text-align: center;
+              }
+
+              .model-selection {
+                  margin: 1.5rem 0;
+              }
+
+              .model-dropdown {
+                  width: 100%;
+                  padding: 10px;
+                  border-radius: 4px;
+                  border: 1px solid var(--border-color);
+                  background-color: white;
+                  font-size: 1rem;
+                  margin-top: 10px;
+              }
+
+              .prediction-buttons {
+                  display: flex;
+                  gap: 10px;
+              }
+
+              .prediction-buttons .btn {
+                  flex: 1;
+              }
+
+              .btn-secondary {
+                  background-color: white;
+                  color: var(--primary-color);
+                  border: 1px solid var(--primary-color);
+              }
+
+              .btn-secondary:hover {
+                  background-color: rgba(92, 94, 222, 0.1);
+              }
+        </style>
+        <!-- Font Awesome for icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class="logo">Skin Disease Detection System</div>
+            </header>
+
+            <div class="main-content">
+                <div class="flex-container">
+                    <!-- Left Section: Image Upload -->
+                    <div class="left-section">
+                        <h2 class="section-title">Upload Image</h2>
+                        <div class="image-upload-container">
+                            {% comment %} <form action="{%url 'ML_Models:upload_view'%}" method="POST" enctype="multipart/form-data"> {% endcomment %}
+                            <form  id="image-upload-form" data-url="{% url 'ML_Models:upload_view' %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="image-upload">
+                                    <i
+                                        class="fas fa-cloud-upload-alt upload-icon"
+                                    ></i>
+                                    <div class="upload-text">
+                                        <label
+                                            for="file-upload"
+                                            class="btn-file"
+                                            >Browse Files</label
+                                        >
+                                        <input
+                                            type="file"
+                                            id="file-upload"
+                                            accept="image/*"
+                                            name="image"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="preview-container hiden">
+                                    <h3>Selected Image</h3>
+                                    <img
+                                        class="preview-image"
+                                        src=""
+                                        alt="Image preview"
+                                    />
+                                </div>
+
+                                <div class="model-selection">
+                                  <h3>Select Model</h3>
+                                  <select name="model_name" id="model-selector" class="model-dropdown">
+                                      <option value="">-- Select a model --</option>
+                                      <option value="RandomForest">Random Forest</option>
+                                      <option value="SVM">SVM</option>
+                                      <option value="XGBoost">XGBoost</option>
+                                      <option value="CNN">CNN</option>
+                                      {% comment %} <option value="ResNet">ResNet</option> {% endcomment %}
+                                      <option value="MobileNet">MobileNet</option>
+                                      <option value="EfficientNet">EfficientNet</option>
+                                  </select>
+                              </div>
+
+                                <div class="prediction-buttons">
+                                  <button class="btn btn-primary" id="classify-btn" type="submit">
+                                      Run All Models
+                                  </button>
+                                  <button class="btn btn-secondary" id="single-model-btn" type="button">
+                                      Run Selected Model
+                                  </button>
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Right Section: Results -->
+                    <div class="right-section">
+                        <div id="classification-result">
+                            <div class="diagnosis-container">
+                             
+                              <div class="best-model-section">
+                                <h3 class="section-title"><i class="emoji-icon">🏆</i> Best Model Result</h3>
+                                
+                                <div class="diagnosis-result">
+                                  <div class="result-highlight">
+                                    <div class="diagnosis-icon">🔬</div>
+                                    <div class="diagnosis-info">
+                                      <div class="diagnosis-name"></div>
+                                      <div>Predicted by <span class="model-name"></span> model with highest confidence</div>
+                                      
+                                      <div class="confidence-container">
+                                        <div class="confidence-label">
+                                          <span>Confidence</span>
+                                          <span class="confidence-value"></span>
+                                        </div>
+                                        <div class="confidence-bar-container">
+                                          <div class="confidence-bar high-confidence" style="width: 91.98%"></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="metrics-grid">
+                                    <div class="metric-card">
+                                      <div class="metric-value"></div>
+                                      <div class="metric-name">Accuracy</div>
+                                    </div>
+                                    <div class="metric-card">
+                                      <div class="metric-value"></div>
+                                      <div class="metric-name">Precision</div>
+                                    </div>
+                                    <div class="metric-card">
+                                      <div class="metric-value"></div>
+                                      <div class="metric-name">Recall</div>
+                                    </div>
+                                    <div class="metric-card">
+                                      <div class="metric-value"></div>
+                                      <div class="metric-name">F1 Score</div>
+                                    </div>
+                                    <div class="metric-card">
+                                      <div class="metric-value"></div>
+                                      <div class="metric-name">Sensitivity</div>
+                                    </div>
+                                    <div class="metric-card">
+                                      <div class="metric-value"></div>
+                                      <div class="metric-name">Specificity</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          
+                              <div class="all-models-section">
+                                <h3 class="section-title"><i class="emoji-icon">📊</i> All Models Comparison</h3>
+                                
+                                <div class="models-table-container">
+                                  <table class="models-table">
+                                    <thead>
+                                      <tr>
+                                        <th>Model</th>
+                                        <th>Prediction</th>
+                                        <th>Confidence</th>
+                                        <th>Accuracy</th>
+                                        <th>Precision</th>
+                                        <th>Recall</th>
+                                        <th>F1 Score</th>
+                                        <th>Specificity</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                  </table>
+                                </div>
+                                
+                                <p class="footnote">Note: The best model is selected based on the highest confidence score among all models.</p>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+
+          $(document).ready(function() {
+            // Handle both form submission and single model prediction
+            function handlePrediction(e, isSingleModel = false) {
+                e.preventDefault();
+                
+                // Get the button elements
+                const submitBtn = $('#image-upload-form').find('button[type="submit"]');
+                const singleModelBtn = $('#single-model-btn');
+
+                // Show processing popup
+                $('#processing-popup').fadeIn(200);
+                
+                // Set loading states
+                if (isSingleModel) {
+                    singleModelBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Processing...');
+                } else {
+                    submitBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Analyzing...');
+                }
+                
+                const form = $('#image-upload-form')[0];
+                var formData = new FormData(form);
+                
+                // Determine the URL based on whether it's single model or all models
+                let url;
+                if (isSingleModel) {
+                    const selectedModel = $('#model-selector').val();
+                    if (!selectedModel) {
+                        alert('Please select a model first');
+                        resetButtons(submitBtn, singleModelBtn);
+                        return;
+                    }
+                    formData.append('selected_model', selectedModel);
+                    url = '/single-model-predict/';
+                } else {
+                    url = $(form).data('url');
+                }
+                
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val(),
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(response) {
+                      console.log("response", response)
+                        if (isSingleModel && !response.success) {
+                            alert(`Error: ${response.error}`);
+                            resetButtons(submitBtn, singleModelBtn);
+                            return;
+                        }
+                        
+                        // Get the model data - different structure for single vs all models
+                        const modelData = isSingleModel ? response.model : response;
+                        const bestModel = isSingleModel ? modelData : modelData.best_model;
+                        const models = isSingleModel ? [modelData] : modelData.models;
+                        
+                        // Process the best model (or single model) results
+                        const bestModelName = bestModel.name;
+                        const bestPrediction = (typeof bestModel.prediction === 'number') 
+                            ? 'Chickenpox'  
+                            : bestModel.prediction;
+                        
+                        const confidence = (bestModel.confidence * 100).toFixed(2) + '%';
+                        
+                        // Update best model section
+                        $('.diagnosis-name').text(bestPrediction);
+                        $('.model-name').text(bestModelName);
+                        $('.confidence-value').text(confidence);
+                        $('.confidence-bar').css('width', confidence);
+                        
+                        // Process metrics
+                        const metrics = bestModel.metrics;
+                        const metricsMap = {
+                            'Accuracy': metrics.accuracy,
+                            'Precision': metrics.precision,
+                            'Recall': metrics.recall,
+                            'F1 Score': metrics.f1_score,
+                            'Sensitivity': metrics.sensitivity,
+                            'Specificity': metrics.specificity
+                        };
+                        
+                        // Update metrics display
+                        $('.metrics-grid .metric-card').each(function() {
+                            const metricName = $(this).find('.metric-name').text().trim();
+                            if (metricsMap[metricName] !== undefined) {
+                                $(this).find('.metric-value').text((metricsMap[metricName] * 100).toFixed(2) + '%');
+                            }
+                        });
+                        
+                        // Update models table
+                        const tableBody = $('.models-table tbody');
+                        tableBody.empty();
+                        
+                        models.forEach((model, index) => {
+                            const isBest = model.name === bestModelName && !isSingleModel;
+                            const prediction = (typeof model.prediction === 'number') 
+                                ? 'Chickenpox'
+                                : model.prediction;
+                            
+                            const rowClass = isBest ? ' class="best-row"' : '';
+                            const badge = isBest ? '<span class="badge">Best</span>' : '';
+                            
+                            const row = `
+                                <tr${rowClass}>
+                                    <td><span class="model-name">${model.name}</span> ${badge}</td>
+                                    <td>${prediction}</td>
+                                    <td>${(model.confidence * 100).toFixed(2)}%</td>
+                                    <td>${(model.metrics.accuracy * 100).toFixed(2)}%</td>
+                                    <td>${(model.metrics.precision * 100).toFixed(2)}%</td>
+                                    <td>${(model.metrics.recall * 100).toFixed(2)}%</td>
+                                    <td>${(model.metrics.f1_score * 100).toFixed(2)}%</td>
+                                    <td>${(model.metrics.specificity * 100).toFixed(2)}%</td>
+                                </tr>
+                            `;
+                            tableBody.append(row);
+                        });
+                        
+                        // Update the footnote for single model case
+                        if (isSingleModel) {
+                            $('.footnote').text(`Note: Showing results for ${bestModelName} model only.`);
+                        } else {
+                            $('.footnote').text('');
+                        }
+                        
+                        // Update preview image
+                        if (response.image_url) {
+                            $('.preview-image').attr('src', response.image_url);
+                        }
+                        
+                        // Reset buttons after success
+                        resetButtons(submitBtn, singleModelBtn);
+                    },
+                    error: function(xhr, status, error) {
+                        $('#classification-result').html(`<p style="color:red;">Error: ${error}</p>`);
+                        // Reset buttons on error
+                        resetButtons(submitBtn, singleModelBtn);
+                    }
+                });
+            }
+            
+            // Function to reset buttons to their original state
+            function resetButtons(submitBtn, singleModelBtn) {
+                submitBtn.prop('disabled', false).html('Analyze Image');
+                singleModelBtn.prop('disabled', false).html('Test Selected Model');
+            }
+            
+            // Form submission for all models
+            $('#image-upload-form').on('submit', function(e) {
+                handlePrediction(e, false);
+            });
+            
+            // Single model predict button
+            $('#single-model-btn').on('click', function(e) {
+                handlePrediction(e, true);
+            });
+            
+            // Image preview handler
+            $('#file-upload').change(function(e) {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        $('.preview-image').attr('src', e.target.result);
+                        $('.preview-container').css('display', 'block');
+                    };
+                    
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+          }); 
+        </script>
+    </body>
+</html>

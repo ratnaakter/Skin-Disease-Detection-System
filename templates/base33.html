@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Disease Detection System - {% block title %}Home{% endblock %}</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- React and ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Recharts -->
+    <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
+    <!-- Custom CSS -->
+    <style>
+        .gradient-bg {
+            background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+        }
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            transition: all 0.2s ease;
+        }
+        .upload-area:hover {
+            border-color: #6366f1;
+        }
+        .progress-bar {
+            height: 16px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white p-4 shadow-md">
+        <div class="container mx-auto">
+            <h1 class="text-2xl font-bold text-center">Skin Disease Detection System</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-8 px-4">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-semibold text-indigo-600">Skin Lesion Classification</h2>
+            <p class="text-gray-600 mt-2">Comparative Analysis of Machine Learning Models for Robust Skin Lesion Classification</p>
+        </div>
+        
+        {% block content %}
+        
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center text-gray-500 text-sm mt-8">
+        <p>© {% now "Y" %} Skin Analyzer AI. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    {% block scripts %}{% endblock %}
+</body>
+</html>
