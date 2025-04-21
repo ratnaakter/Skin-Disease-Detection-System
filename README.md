@@ -156,11 +156,11 @@ This project uses publicly available skin lesion datasets at https://www.kaggle.
 
 ## Author
 
-***Ratna Akter***
+- ***Ratna Akter***
 
-Role: Lead Full-Stack Developer
-GitHub: https://github.com/ratnaakter
-LinkedIn: https://www.linkedin.com/in/ratnaakter/
+- Role: Lead Full-Stack Developer
+- GitHub: https://github.com/ratnaakter
+- LinkedIn: https://www.linkedin.com/in/ratnaakter/
 
 Feel free to reach out for collaborations or questions about this project.
 
