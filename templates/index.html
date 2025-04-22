@@ -747,6 +747,133 @@
               margin-bottom: 5px;
             }
           }
+          /* Error Message Styling */
+          .error-container {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #e74c3c;
+          }
+
+          .error-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+          }
+
+          .error-icon {
+            font-size: 2rem;
+            color: #e74c3c;
+            margin-right: 15px;
+          }
+
+          .error-title {
+            font-size: 1.5rem;
+            color: #e74c3c;
+            margin: 0;
+          }
+
+          .error-message {
+            color: #2d3748;
+            margin-bottom: 20px;
+            line-height: 1.6;
+          }
+
+          .capabilities-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+          }
+
+          .capabilities-title {
+            font-weight: bold;
+            color: #5c5ede;
+            margin-bottom: 10px;
+          }
+
+          .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+          }
+
+          .capability-item {
+            display: flex;
+            align-items: center;
+          }
+
+          .capability-number {
+            min-width: 24px;
+            height: 24px;
+            background-color: #5c5ede;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            margin-right: 10px;
+          }
+
+          .tips-section {
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            padding: 15px;
+          }
+
+          .tips-title {
+            font-weight: bold;
+            color: #5c5ede;
+            margin-bottom: 10px;
+          }
+
+          .tips-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+          }
+
+          .tips-list li {
+            padding: 5px 0 5px 30px;
+            position: relative;
+          }
+
+          .tips-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+            font-weight: bold;
+          }
+
+          .support-message {
+            margin-top: 20px;
+            text-align: center;
+            color: #718096;
+            font-style: italic;
+          }
+
+          /* Responsive adjustments */
+          @media (max-width: 768px) {
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .error-container {
+                padding: 15px;
+            }
+            
+            .error-icon {
+                font-size: 1.5rem;
+            }
+            
+            .error-title {
+                font-size: 1.2rem;
+            }
+          }
         </style>
         <!-- Font Awesome for icons -->
         <link
@@ -913,6 +1040,95 @@
         <script>
 
           $(document).ready(function() {
+            function displayEnhancedError() {
+              const errorMessageHTML = `
+              <div class="error-container">
+                  <div class="error-header">
+                      <div class="error-icon">⚠️</div>
+                      <h3 class="error-title">Image Processing Error</h3>
+                  </div>
+                  
+                  <p class="error-message">We encountered an error processing your image. Our system is designed to identify specific skin conditions only.</p>
+                  
+                  <div class="capabilities-section">
+                      <div class="capabilities-title">Model Capabilities:</div>
+                      <p>Our system classifies only these 14 skin conditions:</p>
+                      <div class="capabilities-grid">
+                          <div class="capability-item">
+                              <div class="capability-number">1</div>
+                              <div>Actinic keratoses</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">2</div>
+                              <div>Basal cell carcinoma</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">3</div>
+                              <div>Benign keratosis-like lesions</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">4</div>
+                              <div>Chickenpox</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">5</div>
+                              <div>Cowpox</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">6</div>
+                              <div>Dermatofibroma</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">7</div>
+                              <div>Healthy skin</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">8</div>
+                              <div>HFMD (Hand Foot Mouth Disease)</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">9</div>
+                              <div>Measles</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">10</div>
+                              <div>Melanocytic nevi</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">11</div>
+                              <div>Melanoma</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">12</div>
+                              <div>Monkeypox</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">13</div>
+                              <div>Squamous cell carcinoma</div>
+                          </div>
+                          <div class="capability-item">
+                              <div class="capability-number">14</div>
+                              <div>Vascular lesions</div>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="tips-section">
+                      <div class="tips-title">Tips for best results:</div>
+                      <ul class="tips-list">
+                          <li>Use clear, well-lit images</li>
+                          <li>Focus on the affected area</li>
+                          <li>Avoid blurry or shadowed images</li>
+                          <li>Capture from multiple angles if possible</li>
+                      </ul>
+                  </div>
+                  
+                  <p class="support-message">If the problem persists, try another image or contact our support team.</p>
+              </div>
+              `;
+              
+              $('#classification-result').html(errorMessageHTML);
+             }
             // Handle both form submission and single model prediction
             function handlePrediction(e, isSingleModel = false) {
                 e.preventDefault();
@@ -1049,9 +1265,11 @@
                         resetButtons(submitBtn, singleModelBtn);
                     },
                     error: function(xhr, status, error) {
-                        $('#classification-result').html(`<p style="color:red;">Error: ${error}</p>`);
-                        // Reset buttons on error
-                        resetButtons(submitBtn, singleModelBtn);
+                      // Replace the simple error message with our enhanced version
+                      displayEnhancedError();
+                      
+                      // Reset buttons on error
+                      resetButtons(submitBtn, singleModelBtn);
                     }
                 });
             }
