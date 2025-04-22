@@ -762,11 +762,9 @@
 
             <div class="main-content">
                 <div class="flex-container">
-                    <!-- Left Section: Image Upload -->
                     <div class="left-section">
                         <h2 class="section-title">Upload Image</h2>
                         <div class="image-upload-container">
-                            {% comment %} <form action="{%url 'ML_Models:upload_view'%}" method="POST" enctype="multipart/form-data"> {% endcomment %}
                             <form  id="image-upload-form" data-url="{% url 'ML_Models:upload_view' %}" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="image-upload">
