@@ -5,622 +5,748 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Skin Disease Detection System</title>
         <style>
-            :root {
-                --primary-color: #5c5ede;
-                --secondary-color: #4547b8;
-                --light-color: #f8f9fa;
-                --dark-color: #343a40;
-                --success-color: #2ecc71;
-                --warning-color: #f39c12;
-                --error-color: #e74c3c;
-                --light-gray: #f8f9fa;
-                --border-color: #e2e8f0;
-                --text-dark: #2d3748;
-                --text-light: #718096;
-                --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-            
-
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            }
-
-            body {
-                background-color: #f5f5f5;
-                color: var(--dark-color);
-                line-height: 1.6;
-                padding: 20px;
-            }
-
+          :root {
+            --primary-color: #5c5ede;
+            --secondary-color: #4547b8;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --error-color: #e74c3c;
+            --light-gray: #f8f9fa;
+            --border-color: #e2e8f0;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          }
+          
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          }
+          
+          body {
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+            line-height: 1.6;
+            padding: 10px;
+          }
+          
+          .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 10px;
+            width: 100%;
+          }
+          
+          header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+          }
+          
+          .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+          }
+          
+          .main-content {
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+          }
+          
+          h1 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+          }
+          
+          .hiden {
+            display: none;
+          }
+          
+          .project-description {
+            margin-bottom: 2rem;
+            text-align: center;
+          }
+          
+          .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+          }
+          
+          .left-section {
+            flex: 1;
+            min-width: 280px;
+          }
+          
+          .right-section {
+            flex: 2;
+            min-width: 280px;
+          }
+          
+          .image-upload-container {
+            margin-bottom: 2rem;
+            width: 100%;
+          }
+          
+          .image-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--primary-color);
+            border-radius: 8px;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            width: 100%;
+          }
+          
+          .image-upload:hover {
+            background-color: rgba(92, 94, 222, 0.05);
+          }
+          
+          .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+          }
+          
+          .upload-text {
+            text-align: center;
+            width: 100%;
+          }
+          
+          .preview-container {
+            margin: 1.5rem 0;
+            text-align: center;
+            width: 100%;
+          }
+          
+          .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+          }
+          
+          .model-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            width: 100%;
+          }
+          
+          .model-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem;
+            border: 2px solid var(--light-color);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+          }
+          
+          .model-option:hover,
+          .model-option.active {
+            border-color: var(--primary-color);
+            background-color: rgba(92, 94, 222, 0.1);
+          }
+          
+          .model-option h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            color: var(--primary-color);
+          }
+          
+          .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-align: center;
+            text-decoration: none;
+            width: 100%;
+          }
+          
+          .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+          }
+          
+          .btn-primary:hover {
+            background-color: var(--secondary-color);
+          }
+          
+          .btn-file {
+            background-color: #f8f9fa;
+            color: var(--dark-color);
+            border: 1px solid #ddd;
+            padding: 0.8rem 1.5rem;
+            margin-top: 1rem;
+            width: auto;
+          }
+          
+          .btn-file:hover {
+            background-color: #e9ecef;
+          }
+          
+          input[type="file"] {
+            display: none;
+          }
+          
+          .results-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            width: 100%;
+          }
+          
+          .result-item {
+            display: flex;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+          }
+          
+          .result-label {
+            flex: 2;
+            min-width: 120px;
+          }
+          
+          .result-value {
+            flex: 3;
+            min-width: 150px;
+          }
+          
+          .diagnosis-result {
+            font-weight: bold;
+            color: var(--primary-color);
+          }
+          
+          .confidence-bar-container {
+            background-color: #e9ecef;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 100%;
+          }
+          
+          .confidence-bar {
+            background-color: var(--primary-color);
+            height: 100%;
+            width: 87%;
+          }
+          
+          .confidence-value {
+            text-align: right;
+            margin-top: 0.3rem;
+          }
+          
+          .probability-distribution {
+            margin-top: 2rem;
+            width: 100%;
+          }
+          
+          .prob-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+          }
+          
+          .prob-label {
+            width: 120px;
+            min-width: 100px;
+          }
+          
+          .prob-bar-container {
+            flex-grow: 1;
+            background-color: #e9ecef;
+            height: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 0 10px;
+            min-width: 150px;
+          }
+          
+          .prob-bar {
+            background-color: var(--primary-color);
+            height: 100%;
+          }
+          
+          .prob-bar-1 {
+            width: 87%;
+          }
+          
+          .prob-bar-2 {
+            width: 8%;
+          }
+          
+          .prob-bar-3 {
+            width: 3%;
+          }
+          
+          .prob-bar-4 {
+            width: 2%;
+          }
+          
+          .model-performance {
+            margin-top: 2rem;
+            width: 100%;
+          }
+          
+          .metrics-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            width: 100%;
+          }
+          
+          .metric-card {
+            flex: 1;
+            min-width: 100px;
+            background-color: white;
+            border-radius: 5px;
+            padding: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+          }
+          
+          .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+          }
+          
+          .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+          }
+          
+          #classification-result {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+          }
+          
+          .diagnosis-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+          }
+          
+          .diagnosis-header {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+            width: 100%;
+          }
+          
+          .diagnosis-header h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+          }
+          
+          .timestamp {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+          }
+          
+          .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            width: 100%;
+          }
+          
+          .image-card {
+            text-align: center;
+            width: 100%;
+            max-width: 280px;
+          }
+          
+          .image-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 10px;
+          }
+          
+          .image-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+          }
+          
+          .best-model-section {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            width: 100%;
+          }
+          
+          .section-title {
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+          }
+          
+          .section-title i {
+            color: var(--success-color);
+            font-size: 1.2rem;
+          }
+          
+          .diagnosis-result {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+          }
+          
+          .result-highlight {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: rgba(46, 204, 113, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+          }
+          
+          .diagnosis-icon {
+            font-size: 2rem;
+            color: var(--success-color);
+            min-width: 40px;
+          }
+          
+          .diagnosis-info {
+            flex-grow: 1;
+            min-width: 200px;
+          }
+          
+          .diagnosis-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+          }
+          
+          .model-name {
+            color: var(--primary-color);
+            font-weight: bold;
+          }
+          
+          .confidence-container {
+            margin-top: 10px;
+            width: 100%;
+          }
+          
+          .confidence-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            flex-wrap: wrap;
+          }
+          
+          .confidence-label span {
+            font-size: 0.9rem;
+            color: var(--text-light);
+          }
+          
+          .confidence-value {
+            font-weight: bold;
+            color: var(--text-dark);
+          }
+          
+          .confidence-bar-container {
+            height: 10px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            overflow: hidden;
+            width: 100%;
+          }
+          
+          .confidence-bar {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease-out;
+          }
+          
+          .high-confidence {
+            background-color: var(--success-color);
+          }
+          
+          .medium-confidence {
+            background-color: var(--warning-color);
+          }
+          
+          .low-confidence {
+            background-color: var(--error-color);
+          }
+          
+          .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            width: 100%;
+          }
+          
+          .metric-card {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+          }
+          
+          .metric-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+          }
+          
+          .metric-name {
+            color: var(--text-light);
+            font-size: 0.9rem;
+          }
+          
+          .all-models-section {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            width: 100%;
+          }
+          
+          .models-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+          }
+          
+          .models-table-container {
+            overflow-x: auto;
+            width: 100%;
+          }
+          
+          .models-table th,
+          .models-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+          }
+          
+          .models-table th {
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            font-weight: bold;
+          }
+          
+          .models-table tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+          }
+          
+          .models-table .best-row {
+            background-color: rgba(46, 204, 113, 0.1);
+          }
+          
+          .models-table .best-row:hover {
+            background-color: rgba(46, 204, 113, 0.15);
+          }
+          
+          .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: white;
+            background-color: var(--success-color);
+          }
+          
+          .emoji-icon {
+            font-style: normal;
+            font-size: 1.2em;
+            margin-right: 5px;
+          }
+          
+          .footnote {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+          }
+          
+          .model-selection {
+            margin: 1.5rem 0;
+            width: 100%;
+          }
+          
+          .model-dropdown {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            background-color: white;
+            font-size: 1rem;
+            margin-top: 10px;
+          }
+          
+          .prediction-buttons {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            flex-wrap: wrap;
+          }
+          
+          .prediction-buttons .btn {
+            flex: 1;
+            min-width: 150px;
+          }
+          
+          .btn-secondary {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+          }
+          
+          .btn-secondary:hover {
+            background-color: rgba(92, 94, 222, 0.1);
+          }
+          
+          /* Responsive adjustments */
+          
+          @media (max-width: 1024px) {
             .container {
-                max-width: 1600px;
-                margin: 0 auto;
-                padding: 20px;
+              padding: 10px;
             }
-
-            header {
-                background-color: var(--primary-color);
-                color: white;
-                padding: 0.5rem 1rem;
-                border-radius: 8px 8px 0 0;
-                text-align: center;
-            }
-
-            .logo {
-                font-size: 1.8rem;
-                font-weight: bold;
-            }
-
+          
             .main-content {
-                background-color: white;
-                border-radius: 0 0 8px 8px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                padding: 1.5rem;
+              padding: 15px;
             }
-
-            h1 {
-                color: var(--primary-color);
-                margin-bottom: 1.5rem;
-                text-align: center;
-            }
-            .hiden{
-              display: none;
-            }
-            .project-description {
-                margin-bottom: 2rem;
-                text-align: center;
-            }
-
+          
             .flex-container {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 2rem;
+              gap: 1.5rem;
             }
-
-            .left-section {
-                flex: 1;
-                min-width: 300px;
+          
+            .metrics-grid {
+              grid-template-columns: repeat(2, 1fr);
             }
-
+          }
+          
+          @media (max-width: 768px) {
+            .flex-container {
+              flex-direction: column;
+            }
+          
+            .left-section,
             .right-section {
-                flex: 2;
-                min-width: 300px;
+              width: 100%;
             }
-
-            .image-upload-container {
-                margin-bottom: 2rem;
-            }
-
+          
             .image-upload {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                border: 2px dashed var(--primary-color);
-                border-radius: 8px;
-                padding: 3rem 2rem;
-                margin-bottom: 2rem;
-                cursor: pointer;
+              padding: 1.5rem 1rem;
             }
-
-            .image-upload:hover {
-                background-color: rgba(92, 94, 222, 0.05);
-            }
-
+          
             .upload-icon {
-                font-size: 4rem;
-                color: var(--primary-color);
-                margin-bottom: 1.5rem;
+              font-size: 2.5rem;
             }
-
-            .upload-text {
-                text-align: center;
+          
+            .result-highlight {
+              padding: 15px 10px;
             }
-
-            .preview-container {
-                margin: 1.5rem 0;
-                text-align: center;
+          
+            .diagnosis-icon {
+              font-size: 1.8rem;
             }
-
-            .preview-image {
-                max-width: 100%;
-                max-height: 300px;
-                border-radius: 8px;
-                border: 1px solid #ddd;
+          
+            .diagnosis-name {
+              font-size: 1.2rem;
             }
-
-            .model-selector {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 1rem;
-                margin: 1.5rem 0;
+          
+            .models-table th,
+            .models-table td {
+              padding: 8px 6px;
+              font-size: 0.9rem;
             }
-
-            .model-option {
-                flex: 1;
-                min-width: 120px;
-                padding: 1rem;
-                border: 2px solid var(--light-color);
-                border-radius: 8px;
-                text-align: center;
-                cursor: pointer;
+          }
+          
+          @media (max-width: 576px) {
+            .metrics-grid {
+              grid-template-columns: repeat(1, 1fr);
             }
-
-            .model-option:hover,
-            .model-option.active {
-                border-color: var(--primary-color);
-                background-color: rgba(92, 94, 222, 0.1);
+          
+            .prediction-buttons {
+              flex-direction: column;
             }
-
-            .model-option h3 {
-                margin-bottom: 0.5rem;
-                font-size: 1rem;
-                color: var(--primary-color);
+          
+            .best-model-section,
+            .all-models-section {
+              padding: 15px;
             }
-
-            .btn {
-                display: inline-block;
-                padding: 1rem 2rem;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-weight: 500;
-                font-size: 1.1rem;
-                text-align: center;
-                text-decoration: none;
-                width: 100%;
-            }
-
-            .btn-primary {
-                background-color: var(--primary-color);
-                color: white;
-            }
-
-            .btn-primary:hover {
-                background-color: var(--secondary-color);
-            }
-
-            .btn-file {
-                background-color: #f8f9fa;
-                color: var(--dark-color);
-                border: 1px solid #ddd;
-                padding: 0.8rem 1.5rem;
-                margin-top: 1rem;
-            }
-
-            .btn-file:hover {
-                background-color: #e9ecef;
-            }
-
-            input[type="file"] {
-                display: none;
-            }
-
-            .results-section {
-                background-color: #f8f9fa;
-                border-radius: 8px;
-                padding: 1.5rem;
-                border: 1px solid #ddd;
-            }
-
-            .result-item {
-                display: flex;
-                margin-bottom: 1rem;
-            }
-
-            .result-label {
-                flex: 2;
-            }
-
-            .result-value {
-                flex: 3;
-            }
-
-            .diagnosis-result {
-                font-weight: bold;
-                color: var(--primary-color);
-            }
-
-            .confidence-bar-container {
-                background-color: #e9ecef;
-                height: 20px;
-                border-radius: 10px;
-                overflow: hidden;
-            }
-
-            .confidence-bar {
-                background-color: var(--primary-color);
-                height: 100%;
-                width: 87%;
-            }
-
-            .confidence-value {
-                text-align: right;
-                margin-top: 0.3rem;
-            }
-
-            .probability-distribution {
-                margin-top: 2rem;
-            }
-
-            .prob-item {
-                display: flex;
-                align-items: center;
-                margin-bottom: 0.5rem;
-            }
-
-            .prob-label {
-                width: 120px;
-            }
-
-            .prob-bar-container {
-                flex-grow: 1;
-                background-color: #e9ecef;
-                height: 20px;
-                border-radius: 5px;
-                overflow: hidden;
-                margin: 0 10px;
-            }
-
-            .prob-bar {
-                background-color: var(--primary-color);
-                height: 100%;
-            }
-
-            .prob-bar-1 {
-                width: 87%;
-            }
-
-            .prob-bar-2 {
-                width: 8%;
-            }
-
-            .prob-bar-3 {
-                width: 3%;
-            }
-
-            .prob-bar-4 {
-                width: 2%;
-            }
-
-            .model-performance {
-                margin-top: 2rem;
-            }
-
-            .metrics-container {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 1rem;
-            }
-
-            .metric-card {
-                flex: 1;
-                min-width: 100px;
-                background-color: white;
-                border-radius: 5px;
-                padding: 1rem;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            }
-
-            .metric-value {
-                font-size: 1.5rem;
-                font-weight: bold;
-                color: var(--primary-color);
-            }
-
+          
             .section-title {
-                color: var(--primary-color);
-                margin-bottom: 1rem;
-            }
-
-            @media (max-width: 768px) {
-                .flex-container {
-                    flex-direction: column;
-                }
+              font-size: 1.1rem;
             }
           
-              #classification-result {
-                width: 100%;
-                max-width: 1100px;
-                margin: 0 auto;
-              }
+            .models-table th,
+            .models-table td {
+              padding: 6px 4px;
+              font-size: 0.8rem;
+            }
           
-              .diagnosis-container {
-                display: flex;
-                flex-direction: column;
-                gap: 25px;
-              }
+            .logo {
+              font-size: 1.5rem;
+            }
+          }
           
-              .diagnosis-header {
-                background-color: white;
-                border-radius: 12px;
-                box-shadow: var(--shadow);
-                padding: 25px;
-                text-align: center;
-                margin-bottom: 10px;
-              }
+          @media (max-width: 400px) {
+            .diagnosis-name {
+              font-size: 1.1rem;
+            }
           
-              .diagnosis-header h2 {
-                color: var(--primary-color);
-                margin-bottom: 10px;
-                font-size: 1.8rem;
-              }
+            .metric-value {
+              font-size: 1.2rem;
+            }
           
-              .timestamp {
-                color: var(--text-light);
-                font-size: 0.9rem;
-                margin-bottom: 15px;
-              }
+            .result-highlight {
+              flex-direction: column;
+              text-align: center;
+            }
           
-              .image-container {
-                display: flex;
-                justify-content: center;
-                gap: 20px;
-                flex-wrap: wrap;
-                margin: 20px 0;
-              }
-          
-              .image-card {
-                text-align: center;
-                width: 280px;
-              }
-          
-              .image-card img {
-                width: 100%;
-                height: auto;
-                border-radius: 8px;
-                box-shadow: var(--shadow);
-                margin-bottom: 10px;
-              }
-          
-              .image-card p {
-                color: var(--text-light);
-                font-size: 0.9rem;
-              }
-          
-              .best-model-section {
-                background-color: white;
-                border-radius: 12px;
-                box-shadow: var(--shadow);
-                padding: 25px;
-              }
-          
-              .section-title {
-                color: var(--primary-color);
-                border-bottom: 1px solid var(--border-color);
-                padding-bottom: 10px;
-                margin-bottom: 20px;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-              }
-          
-              .section-title i {
-                color: var(--success-color);
-                font-size: 1.2rem;
-              }
-          
-              .diagnosis-result {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-              }
-          
-              .result-highlight {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-                background-color: rgba(46, 204, 113, 0.1);
-                border-radius: 8px;
-                padding: 20px;
-                margin-bottom: 10px;
-              }
-          
-              .diagnosis-icon {
-                font-size: 2.5rem;
-                color: var(--success-color);
-              }
-          
-              .diagnosis-info {
-                flex-grow: 1;
-              }
-          
-              .diagnosis-name {
-                font-size: 1.5rem;
-                font-weight: bold;
-                color: var(--text-dark);
-                margin-bottom: 5px;
-              }
-          
-              .model-name {
-                color: var(--primary-color);
-                font-weight: bold;
-              }
-          
-              .confidence-container {
-                margin-top: 10px;
-              }
-          
-              .confidence-label {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 5px;
-              }
-          
-              .confidence-label span {
-                font-size: 0.9rem;
-                color: var(--text-light);
-              }
-          
-              .confidence-value {
-                font-weight: bold;
-                color: var(--text-dark);
-              }
-          
-              .confidence-bar-container {
-                height: 10px;
-                background-color: var(--light-gray);
-                border-radius: 5px;
-                overflow: hidden;
-              }
-          
-              .confidence-bar {
-                height: 100%;
-                border-radius: 5px;
-                transition: width 0.5s ease-out;
-              }
-          
-              .high-confidence {
-                background-color: var(--success-color);
-              }
-          
-              .medium-confidence {
-                background-color: var(--warning-color);
-              }
-          
-              .low-confidence {
-                background-color: var(--error-color);
-              }
-          
-              .metrics-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 15px;
-                {% comment %} margin-top: 20px; {% endcomment %}
-              }
-          
-              @media (max-width: 768px) {
-                .metrics-grid {
-                  grid-template-columns: repeat(2, 1fr);
-                }
-              }
-          
-              @media (max-width: 500px) {
-                .metrics-grid {
-                  grid-template-columns: 1fr;
-                }
-              }
-          
-              .metric-card {
-                background-color: var(--light-gray);
-                border-radius: 8px;
-                padding: 5px;
-                text-align: center;
-              }
-          
-              .metric-value {
-                font-size: 1.4rem;
-                font-weight: bold;
-                color: var(--primary-color);
-                margin-bottom: 5px;
-              }
-          
-              .metric-name {
-                color: var(--text-light);
-                font-size: 0.9rem;
-              }
-          
-              .all-models-section {
-                background-color: white;
-                border-radius: 12px;
-                box-shadow: var(--shadow);
-                padding: 25px;
-              }
-          
-              .models-table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-                overflow-x: auto;
-              }
-          
-              .models-table-container {
-                overflow-x: auto;
-              }
-          
-              .models-table th,
-              .models-table td {
-                padding: 12px 15px;
-                text-align: left;
-                border-bottom: 1px solid var(--border-color);
-              }
-          
-              .models-table th {
-                background-color: var(--light-gray);
-                color: var(--text-dark);
-                font-weight: bold;
-              }
-          
-              .models-table tbody tr:hover {
-                background-color: rgba(52, 152, 219, 0.05);
-              }
-          
-              .models-table .best-row {
-                background-color: rgba(46, 204, 113, 0.1);
-              }
-          
-              .models-table .best-row:hover {
-                background-color: rgba(46, 204, 113, 0.15);
-              }
-          
-              .badge {
-                display: inline-block;
-                padding: 2px 8px;
-                border-radius: 12px;
-                font-size: 0.75rem;
-                font-weight: bold;
-                color: white;
-                background-color: var(--success-color);
-              }
-          
-              .emoji-icon {
-                font-style: normal;
-                font-size: 1.2em;
-                margin-right: 5px;
-              }
-          
-              .footnote {
-                margin-top: 15px;
-                font-size: 0.85rem;
-                color: var(--text-light);
-                text-align: center;
-              }
-
-              .model-selection {
-                  margin: 1.5rem 0;
-              }
-
-              .model-dropdown {
-                  width: 100%;
-                  padding: 10px;
-                  border-radius: 4px;
-                  border: 1px solid var(--border-color);
-                  background-color: white;
-                  font-size: 1rem;
-                  margin-top: 10px;
-              }
-
-              .prediction-buttons {
-                  display: flex;
-                  gap: 10px;
-              }
-
-              .prediction-buttons .btn {
-                  flex: 1;
-              }
-
-              .btn-secondary {
-                  background-color: white;
-                  color: var(--primary-color);
-                  border: 1px solid var(--primary-color);
-              }
-
-              .btn-secondary:hover {
-                  background-color: rgba(92, 94, 222, 0.1);
-              }
+            .diagnosis-icon {
+              margin-bottom: 5px;
+            }
+          }
         </style>
         <!-- Font Awesome for icons -->
         <link
