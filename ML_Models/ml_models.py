@@ -6,7 +6,6 @@
 # Developer:  Ratna Akter(Lead Full-Stack Developer)
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-
 import os
 import cv2
 import joblib
@@ -24,6 +23,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.models import load_model
 from tensorflow.keras.applications import ResNet50, EfficientNetB0
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 from tensorflow.keras.applications.mobilenet import MobileNet
@@ -31,14 +31,13 @@ from tensorflow.keras.layers import GlobalAveragePooling2D, Dense
 from tensorflow.keras.applications import MobileNet, EfficientNetB0
 from tensorflow.keras.applications import MobileNet, EfficientNetB0
 
-
 class BaseModel:
     def __init__(self, name):
         # Initialize the base model with model name, input size, categories, paths, metrics, and model
         self.name = name
         self.input_size = (224, 224)
         self.categories = ['Actinic keratoses',
-                           # 'Basal cell carcinoma',
+                           'Basal cell carcinoma',
                            'Benign keratosis-like lesions',
                            'Chickenpox',
                            'Cowpox',
@@ -46,8 +45,8 @@ class BaseModel:
                            'Healthy',
                            'HFMD',
                            'Measles',
-                           # 'Melanocytic nevi',
-                           # 'Melanoma',
+                           'Melanocytic nevi',
+                           'Melanoma',
                            'Monkeypox',
                            'Squamous cell carcinoma',
                            'Vascular lesions']
@@ -167,7 +166,7 @@ class SVMModel(BaseModel):
             'f1_score': float(f1),
             # Sensitivity is equivalent to recall
             'sensitivity': float(recall),
-            'specificity': 0.9  # Placeholder value for specificity
+            'specificity': 0.9,  # Placeholder value for specificity
         }
 
         self.save_metrics(metrics)
@@ -235,14 +234,31 @@ class RandomForestModel(BaseModel):
 
 class XGBoostModel(BaseModel):
     def __init__(self):
-        # Initialize the XGBoost model with base class setup and label mapping
-        super().__init__('XGBoost')
+        # First initialize the label maps with categories
+        self.categories = [
+            'Actinic keratoses',
+            'Basal cell carcinoma',
+            'Benign keratosis-like lesions',
+            'Chickenpox',
+            'Cowpox',
+            'Dermatofibroma',
+            'Healthy',
+            'HFMD',
+            'Measles',
+            'Melanocytic nevi',
+            'Melanoma',
+            'Monkeypox',
+            'Squamous cell carcinoma',
+            'Vascular lesions'
+        ]
         self.label_map = {label: i for i, label in enumerate(self.categories)}
         self.reverse_label_map = {i: label for i,
                                   label in enumerate(self.categories)}
 
+        # Now initialize parent class
+        super().__init__('XGBoost')
+
     def train_model(self):
-        # Train the XGBoost model using extracted features from images
 
         # Load image paths and corresponding labels
         images, labels = [], []
@@ -321,19 +337,20 @@ class XGBoostModel(BaseModel):
 
 class CommonBaseModel:
 
-    categories = [
-        'Actinic keratoses',
-        'Benign keratosis-like lesions',
-        'Chickenpox',
-        'Cowpox',
-        'Dermatofibroma',
-        'Healthy',
-        'HFMD',
-        'Measles',
-        'Monkeypox',
-        'Squamous cell carcinoma',
-        'Vascular lesions'
-    ]
+    categories = ['Actinic keratoses',
+                  'Basal cell carcinoma',
+                  'Benign keratosis-like lesions',
+                  'Chickenpox',
+                  'Cowpox',
+                  'Dermatofibroma',
+                  'Healthy',
+                  'HFMD',
+                  'Measles',
+                  'Melanocytic nevi',
+                  'Melanoma',
+                  'Monkeypox',
+                  'Squamous cell carcinoma',
+                  'Vascular lesions']
 
     def __init__(self, name, input_size):
         # Initialize model with name, input size, paths for data, model, and metrics
@@ -487,7 +504,7 @@ class MobileNetModel(CommonBaseModel):
             'sensitivity': float(recall_score(y_true, y_pred, average='weighted', zero_division=0)),
             'specificity': 0.92
         })
-
+        model.save(self.model_path)
         return model
 
 

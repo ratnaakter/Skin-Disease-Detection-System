@@ -842,8 +842,3 @@ models = {
     'EfficientNet': efficientnet_model,
     # 'ResNet': resnet_model,
 }
-
-✅ AI Model Comparison for Skin Disease Detection
-#Comparative ML Model Analysis
-#Comparative Analysis of Machine Learning Models
-#Comparative Study of AI Models for Skin Disease Detection
