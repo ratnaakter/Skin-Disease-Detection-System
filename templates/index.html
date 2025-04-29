@@ -515,19 +515,23 @@
           .metrics-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            gap: 10px;
             width: 100%;
           }
           
           .metric-card {
             background-color: var(--light-gray);
             border-radius: 8px;
-            padding: 15px;
+            padding: 5px;
             text-align: center;
+            display: flex;
+            justify-content: space-between;
+            padding-inline: 15px;
+            align-items: center;
           }
           
           .metric-value {
-            font-size: 1.4rem;
+            font-size: 1rem;
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 5px;
@@ -874,6 +878,110 @@
                 font-size: 1.2rem;
             }
           }
+          /* Medical Recommendations Section */
+          .medical-recommendations-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 15px;
+          }
+          
+          .recommendations-container {
+            margin-top: 15px;
+          }
+          
+          .specialist-recommendation {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-gray);
+            padding-inline: 12px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 6px;
+            box-shadow: var(--light-gray);
+          }
+          
+          .specialist-icon {
+            font-size: 24px;
+            margin-right: 12px;
+          }
+          
+          .specialist-info {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+          }
+          
+          .specialist-label {
+            font-weight: 600;
+            margin-right: 8px;
+            color: #555;
+          }
+          
+          .specialist-name {
+            color: #2196F3;
+            font-weight: 600;
+          }
+          
+          .medical-advice {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow:var(--light-gray);
+          }
+          
+          .advice-heading {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #333;
+            display: flex;
+            align-items: center;
+          }
+          
+          .advice-heading i {
+            margin-right: 8px;
+            color: #4caf50;
+          }
+          
+          .advice-list {
+            padding-left: 30px;
+          }
+          
+          .advice-list li {
+            margin-bottom: 10px;
+            color: #555;
+            line-height: 1.5;
+          }
+          
+          .medical-disclaimer {
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            font-size: 0.85em;
+            color: red;
+            font-style: italic;
+          }
+          
+          .emoji-icon {
+            font-style: normal;
+            margin-right: 8px;
+          }
+          
+          /* Responsive adjustments */
+          @media (max-width: 768px) {
+            .content {
+              flex-direction: column;
+            }
+            
+            .specialist-info {
+              flex-direction: column;
+              align-items: flex-start;
+            }
+            
+            .specialist-label {
+              margin-bottom: 5px;
+            }
+          }
         </style>
         <!-- Font Awesome for icons -->
         <link
@@ -977,28 +1085,28 @@
                                   
                                   <div class="metrics-grid">
                                     <div class="metric-card">
-                                      <div class="metric-value"></div>
                                       <div class="metric-name">Accuracy</div>
+                                      <div class="metric-value">0%</div>
                                     </div>
                                     <div class="metric-card">
-                                      <div class="metric-value"></div>
                                       <div class="metric-name">Precision</div>
+                                      <div class="metric-value">0%</div>
                                     </div>
                                     <div class="metric-card">
-                                      <div class="metric-value"></div>
                                       <div class="metric-name">Recall</div>
+                                      <div class="metric-value">0%</div>
                                     </div>
                                     <div class="metric-card">
-                                      <div class="metric-value"></div>
                                       <div class="metric-name">F1 Score</div>
+                                      <div class="metric-value">0%</div>
                                     </div>
                                     <div class="metric-card">
-                                      <div class="metric-value"></div>
                                       <div class="metric-name">Sensitivity</div>
+                                      <div class="metric-value">0%</div>
                                     </div>
                                     <div class="metric-card">
-                                      <div class="metric-value"></div>
                                       <div class="metric-name">Specificity</div>
+                                      <div class="metric-value">0%</div>
                                     </div>
                                   </div>
                                 </div>
@@ -1030,7 +1138,33 @@
                                 
                                 <p class="footnote">Note: The best model is selected based on the highest confidence score among all models.</p>
                               </div>
+
+                              <!-- Medical Recommendations Section -->
+                              <div class="medical-recommendations-section">
+                                <h3 class="section-title"><i class="emoji-icon">💊</i> Medical Recommendations</h3>
+                                
+                                <div class="recommendations-container">
+                                  <div class="specialist-recommendation">
+                                    <div class="specialist-icon">👨‍⚕️</div>
+                                    <div class="specialist-info">
+                                      <div class="specialist-label">Recommended Specialist:</div>
+                                      <div class="specialist-name" id="recommended-specialist"></div>
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="medical-advice">
+                                    <h4 class="advice-heading"><i class="emoji-icon">ℹ️</i> Medical Advice:</h4>
+                                    <ul class="advice-list" id="medical-advice-list">
+                                    </ul>
+                                  </div>
+                                  
+                                  <div class="medical-disclaimer">
+                                    <p>Note: This information is for guidance only. Always consult with a healthcare professional for personalized medical advice.</p>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1040,6 +1174,109 @@
         <script>
 
           $(document).ready(function() {
+            const doctorAdvice={
+              "Actinic keratoses": {
+                  "doctor": "Dermatologist",
+                  "suggestions": [
+                      "Avoid excessive sun exposure; use broad-spectrum sunscreen (SPF 30+).",
+                      "Regular skin checks to monitor for progression to squamous cell carcinoma.",
+                      "Treatment may include cryotherapy (freezing), topical creams, or photodynamic therapy."
+                  ]
+              },
+              "Basal cell carcinoma": {
+                  "doctor": "Dermatologist or Oncologist (if advanced)",
+                  "suggestions": [
+                      "Surgical removal (e.g., excision, Mohs surgery) is common.",
+                      "Protect skin from UV radiation to prevent recurrence."
+                  ]
+              },
+              "Benign keratosis-like lesions": {
+                  "doctor": "Dermatologist",
+                  "suggestions": [
+                      "Usually harmless but may be removed for cosmetic reasons or if irritated.",
+                      "Avoid scratching or picking at the lesions."
+                  ]
+              },
+              "Chickenpox": {
+                  "doctor": "General Physician or Pediatrician",
+                  "suggestions": [
+                      "Rest, hydration, and calamine lotion for itching.",
+                      "Antiviral medication (e.g., acyclovir) for severe cases.",
+                      "Isolate to prevent spreading (highly contagious)."
+                  ]
+              },
+              "Cowpox": {
+                  "doctor": "General Physician or Infectious Disease Specialist",
+                  "suggestions": [
+                      "Rare but self-limiting; keep lesions clean and dry.",
+                      "Monitor for secondary infections."
+                  ]
+              },
+              "Dermatofibroma": {
+                  "doctor": "Dermatologist",
+                  "suggestions": [
+                      "Typically benign; no treatment needed unless symptomatic.",
+                      "Surgical removal possible if causing discomfort."
+                  ]
+              },
+              "Healthy": {
+                  "doctor": "None (routine checkup optional)",
+                  "suggestions": [
+                      "Continue regular skin care (cleansing, moisturizing, sun protection).",
+                      "Annual skin checks if at risk (e.g., family history of skin cancer)."
+                  ]
+              },
+              "HFMD": {
+                  "doctor": "Pediatrician or General Physician",
+                  "suggestions": [
+                      "Supportive care (pain relief, hydration).",
+                      "Highly contagious; avoid close contact until healed."
+                  ]
+              },
+              "Measles": {
+                  "doctor": "General Physician or Infectious Disease Specialist",
+                  "suggestions": [
+                      "Rest, fluids, and fever management.",
+                      "Vaccination is the best prevention."
+                  ]
+              },
+              "Melanocytic nevi": {
+                  "doctor": "Dermatologist",
+                  "suggestions": [
+                      "Monitor for changes in size, color, or shape (ABCDE rule).",
+                      "Biopsy if suspicious for melanoma."
+                  ]
+              },
+              "Melanoma": {
+                  "doctor": "Dermatologist or Oncologist (urgent referral)",
+                  "suggestions": [
+                      "Early detection is critical; surgical excision is primary treatment.",
+                      "Avoid UV exposure and perform regular self-exams."
+                  ]
+              },
+              "Monkeypox": {
+                  "doctor": "Infectious Disease Specialist",
+                  "suggestions": [
+                      "Isolate and follow public health guidelines.",
+                      "Supportive care for symptoms (e.g., pain, fever)."
+                  ]
+              },
+              "Squamous cell carcinoma": {
+                  "doctor": "Dermatologist or Oncologist",
+                  "suggestions": [
+                      "Surgical removal or radiation therapy.",
+                      "Regular follow-ups to monitor for recurrence."
+                  ]
+              },
+              "Vascular lesions": {
+                  "doctor": "Dermatologist or Vascular Specialist",
+                  "suggestions": [
+                      "Laser therapy or surgical options for problematic lesions.",
+                      "Monitor for growth or ulceration."
+                  ]
+              }
+            }
+
             function displayEnhancedError() {
               const errorMessageHTML = `
               <div class="error-container">
@@ -1260,6 +1497,24 @@
                         if (response.image_url) {
                             $('.preview-image').attr('src', response.image_url);
                         }
+
+                        const advice = doctorAdvice[bestPrediction];
+                        console.log("name", bestPrediction)
+                        console.log("advice",advice)
+                        if (advice) {
+                          $('#recommended-specialist').text(advice.doctor);
+                          
+                          $('#medical-advice-list').empty();
+                          
+                          // Add each suggestion as a list item
+                          $.each(advice.suggestions, function(index, suggestion) {
+                            $('#medical-advice-list').append('<li>' + suggestion + '</li>');
+                          });
+                        } else {
+                          // Handle the case where no advice is found for the prediction
+                          $('#recommended-specialist').text('General Practitioner');
+                          $('#medical-advice-list').html('<li>Please consult with a doctor for proper diagnosis and treatment.</li>');
+                        }
                         
                         // Reset buttons after success
                         resetButtons(submitBtn, singleModelBtn);
@@ -1303,7 +1558,7 @@
                     reader.readAsDataURL(this.files[0]);
                 }
             });
-        }); 
+          }); 
         </script>
     </body>
 </html>
