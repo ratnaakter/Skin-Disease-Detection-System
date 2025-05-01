@@ -104,8 +104,7 @@
             justify-content: center;
             border: 2px dashed var(--primary-color);
             border-radius: 8px;
-            padding: 2rem 1rem;
-            margin-bottom: 2rem;
+            padding: 0.8rem 1rem 1.6rem 1rem;
             cursor: pointer;
             width: 100%;
           }
@@ -117,7 +116,7 @@
           .upload-icon {
             font-size: 3rem;
             color: var(--primary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
           }
           
           .upload-text {
@@ -126,14 +125,14 @@
           }
           
           .preview-container {
-            margin: 1.5rem 0;
+            margin: 1rem 0rem 1rem 0rem;
             text-align: center;
             width: 100%;
           }
           
           .preview-image {
             max-width: 100%;
-            max-height: 300px;
+            max-height: 200px;
             border-radius: 8px;
             border: 1px solid #ddd;
           }
@@ -170,12 +169,12 @@
           
           .btn {
             display: inline-block;
-            padding: 1rem 2rem;
+            padding: 1rem 1rem;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 500;
-            font-size: 1.1rem;
+            font-size: 0.8rem;
             text-align: center;
             text-decoration: none;
             width: 100%;
@@ -611,7 +610,7 @@
           }
           
           .model-selection {
-            margin: 1.5rem 0;
+            margin: 0.8rem 0rem 1.5rem 0rem;
             width: 100%;
           }
           
@@ -884,8 +883,7 @@
             border-radius: 8px;
             box-shadow: var(--shadow);
             padding: 15px;
-          }
-          
+          }  
           .recommendations-container {
             margin-top: 15px;
           }
@@ -1141,8 +1139,12 @@
 
                               <!-- Medical Recommendations Section -->
                               <div class="medical-recommendations-section">
-                                <h3 class="section-title"><i class="emoji-icon">💊</i> Medical Recommendations</h3>
-                                
+                                <h3 class="section-title">
+                                  <span>
+                                    <i class="emoji-icon">💊</i> 
+                                    Medical Recommendations for <span style="font-size: 1.2rem; color:var(--primary-color)" class="diagnosis-name"></span>.
+                                  </span>
+                                </h3>
                                 <div class="recommendations-container">
                                   <div class="specialist-recommendation">
                                     <div class="specialist-icon">👨‍⚕️</div>
@@ -1381,7 +1383,7 @@
                 if (isSingleModel) {
                     singleModelBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Processing...');
                 } else {
-                    submitBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Analyzing...');
+                    submitBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Processing...');
                 }
                 
                 const form = $('#image-upload-form')[0];
@@ -1488,9 +1490,10 @@
                         
                         // Update the footnote for single model case
                         if (isSingleModel) {
-                            $('.footnote').text(`Note: Showing results for ${bestModelName} model only.`);
+                          $('.all-models-section').hide();
                         } else {
-                            $('.footnote').text('');
+                          $('.all-models-section').show();
+                          $('.footnote').text(`Note: Showing results for ${bestModelName} model only.`);
                         }
                         
                         // Update preview image
@@ -1531,8 +1534,8 @@
             
             // Function to reset buttons to their original state
             function resetButtons(submitBtn, singleModelBtn) {
-                submitBtn.prop('disabled', false).html('Analyze Image');
-                singleModelBtn.prop('disabled', false).html('Test Selected Model');
+                submitBtn.prop('disabled', false).html('Run All Models');
+                singleModelBtn.prop('disabled', false).html('Run Selected Model');
             }
             
             // Form submission for all models
